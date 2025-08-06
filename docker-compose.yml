@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    command: ["mongod", "--auth"]
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: usuariomongo
+      MONGO_INITDB_ROOT_PASSWORD: user123
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - microservices
+    restart: always
+
+volumes:
+  mongo-data:
+
+networks:
+  microservices:
+    driver: bridge

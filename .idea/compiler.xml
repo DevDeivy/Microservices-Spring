@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Annotation profile for ecommerce" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -11,13 +12,14 @@
         </processorPath>
         <module name="config-server" />
         <module name="discovery-server" />
-        <module name="microservices" />
+        <module name="costumer-microservices" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="config-server" options="-parameters" />
+      <module name="costumer-microservices" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="ecommerce" options="-parameters" />
       <module name="microservices" options="-parameters" />
