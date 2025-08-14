@@ -12,12 +12,14 @@
         </processorPath>
         <module name="config-server" />
         <module name="discovery-server" />
+        <module name="common-exceptions" />
         <module name="costumer-microservices" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="common-exceptions" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="costumer-microservices" options="-parameters" />
       <module name="discovery-server" options="-parameters" />

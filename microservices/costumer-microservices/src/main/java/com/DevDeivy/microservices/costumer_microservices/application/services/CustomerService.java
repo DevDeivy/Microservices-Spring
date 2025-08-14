@@ -2,6 +2,7 @@ package com.DevDeivy.microservices.costumer_microservices.application.services;
 
 import com.DevDeivy.microservices.costumer_microservices.domain.models.Customer;
 import com.DevDeivy.microservices.costumer_microservices.domain.models.CustomerRequest;
+import com.DevDeivy.microservices.costumer_microservices.exceptions.CustomerNotFoundException;
 import com.DevDeivy.microservices.costumer_microservices.infraestructure.repository.CustomerRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class CustomerService {
         }
         var customer = customerMapper.toCustomer(request);
         Object customerSaved = customerRepository.save(customer);
-        return ResponseEntity.ok("customer created" + customerSaved);
+        return ResponseEntity.ok(customerSaved);
     }
 
     public ResponseEntity<Object> getCustomerById(Long id){
@@ -33,11 +34,13 @@ public class CustomerService {
         if (id == null){
             return ResponseEntity.badRequest().body("the id are not null");
         } else if (!customerRepository.existsById(id)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("the id are not exist");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("the id was not found");
         }
 
         Optional<Customer> entityOptional = customerRepository.findById(id);
-        return ResponseEntity.ok(entityOptional);
+        return ResponseEntity.ok(entityOptional.orElseThrow(() -> new CustomerNotFoundException(
+                String.format("customer with this id is not found" , id)
+        )));
     }
 
     public ResponseEntity<Object> getAllCustomers(){
@@ -60,7 +63,7 @@ public class CustomerService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("the client was not found");
         }
         Customer updated = customerRepository.save(customer);
-        return ResponseEntity.ok("customer updated sucessfully " + updated);
+        return ResponseEntity.ok(updated);
     }
 }
 
